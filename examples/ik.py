@@ -22,6 +22,8 @@ with torch.no_grad(): body_sample = bm(body_pose=torch.tensor(sample['poses'][:1
 mesh_sample = pv.make_tri_mesh(body_sample.vertices[0].numpy(),f)
 mesh_estimate = fk(vpbm)
 
+print(body_sample.joints)
+
 for cls in [optim.SGD,optim.Adam,optim.LBFGS]:
     vpbm.reset_params()
     parameters = [vpbm.body_pose_z]
@@ -44,7 +46,7 @@ for cls in [optim.SGD,optim.Adam,optim.LBFGS]:
     for i in range(niter):
         loss = optimizer.step(closure)
         print(f'{i}/{niter} loss={loss.item()}')
-        pl.update_coordinates(fk(vpbm).points)
+        mesh_estimate.points = fk(vpbm).points
         pl.render()
         pl.write_frame()
     pl.close()  
