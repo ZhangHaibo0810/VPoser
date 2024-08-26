@@ -42,7 +42,7 @@ def clean_v2(vposer_dir):
         vp,ps = load_model(model_ps,trained_weigths_fname, model_code=VPoser,
                                 remove_words_in_model_weights='vp_model.',
                                 disable_grad=True)
-        torch.save(vp.state_dict(),f'{vposer_dir}/{fn}')
+        torch.save(vp.state_dict(),f'{vposer_dir}/../{fn}')
 
 
 def clean_v1(vposer_dir):
@@ -50,7 +50,7 @@ def clean_v1(vposer_dir):
     vposer = VPoser(512,32,[1,21,3])
     state_dict = torch.load(f'{vposer_dir}/snapshots/TR00_E096.pt',map_location='cpu')
     vposer.load_state_dict(state_dict)
-    torch.save(vposer.state_dict(),f'{vposer_dir}/TR00_E096.pt')
+    torch.save(vposer.state_dict(),f'{vposer_dir}/../TR00_E096.pt')
 
 
 def main(args):
