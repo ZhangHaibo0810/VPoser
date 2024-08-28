@@ -22,8 +22,6 @@ with torch.no_grad(): body_sample = bm(body_pose=torch.tensor(sample['poses'][:1
 mesh_sample = pv.make_tri_mesh(body_sample.vertices[0].numpy(),f)
 mesh_estimate = fk(vpbm)
 
-print(body_sample.joints)
-
 for cls in [optim.SGD,optim.Adam,optim.LBFGS]:
     vpbm.reset_params()
     parameters = [vpbm.body_pose_z]
@@ -36,7 +34,7 @@ for cls in [optim.SGD,optim.Adam,optim.LBFGS]:
         loss.backward()
         return loss
 
-    pl = pv.Plotter(window_size=[200,200])
+    pl = pv.Plotter(window_size=[300,400])
     pl.add_mesh(mesh_sample,color='grey')
     pl.add_mesh(mesh_estimate)
     pl.view_xy()
